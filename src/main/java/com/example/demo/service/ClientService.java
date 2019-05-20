@@ -19,7 +19,4 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public List<Client> findClientById(Long id) {
-        return clientRepository.findClientById(id);
-    }
 }

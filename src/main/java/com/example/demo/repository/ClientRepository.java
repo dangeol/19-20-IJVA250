@@ -11,6 +11,5 @@ import java.util.List;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
-    @Query("select c from Client c where c.id = id")
-    List<Client> findClientById(@Param("id") Long id);
+
 }

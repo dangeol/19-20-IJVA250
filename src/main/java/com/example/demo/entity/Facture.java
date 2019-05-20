@@ -36,6 +36,10 @@ public class Facture {
     }
 
     public Double getTotal() {
-        return 100.0;
+        Double somme = 0.0;
+        for(LigneFacture ligneFactures : ligneFactures) {
+            somme += ligneFactures.getSousTotal();
+        }
+        return somme;
     }
 }

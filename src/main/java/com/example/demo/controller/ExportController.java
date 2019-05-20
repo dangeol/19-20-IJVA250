@@ -98,5 +98,7 @@ public class ExportController {
 
             ligne++;
         }
+        workbook.write(response.getOutputStream());
+        workbook.close();
     }
 }
