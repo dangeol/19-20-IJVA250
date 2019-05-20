@@ -36,15 +36,10 @@ public class LigneFacture {
         this.article = article;
     }
 
-    public Facture getFacture() {
-        return facture;
-    }
+    public Facture getFacture() { return facture; }
 
-    public void setFacture(Facture facture) {
-        this.facture = facture;
-    }
+    public void setFacture(Facture facture) { this.facture = facture; }
 
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
-    }
+    public void setQuantite(int quantite) { this.quantite = quantite; }
+
 }

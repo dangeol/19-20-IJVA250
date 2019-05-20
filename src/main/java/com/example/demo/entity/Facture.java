@@ -34,4 +34,8 @@ public class Facture {
     public void setClient(Client client) {
         this.client = client;
     }
+
+    public Double getTotal() {
+        return 100.0;
+    }
 }

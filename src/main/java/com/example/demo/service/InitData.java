@@ -38,7 +38,7 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
         Client client3 = newClient("D\"oe", "Jo;hn", LocalDate.of(2000, 1, 3));
         em.persist(client3);
 
-        Client client4 = newClient("Oellers", "Daniel", LocalDate.of(1980, 10, 26));
+        Client client4 = newClient("Oellers", "Daniel", LocalDate.of(1980, 9, 26));
         em.persist(client4);
 
         Article a1 = new Article();
