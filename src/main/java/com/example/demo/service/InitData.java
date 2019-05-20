@@ -76,7 +76,7 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
         client.setNom(nom);
         client.setPrenom(prenom);
         client.setDateNaissance(dateNaissance);
-        //client.setAge(age);
+        client.setAge();
         return client;
     }
 

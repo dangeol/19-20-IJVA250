@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Set;
 
 /**
@@ -24,7 +25,7 @@ public class Client {
     private LocalDate dateNaissance;
 
     @Column
-    private Integer age;
+    private int age;
 
     public Long getId() {
         return id;
@@ -58,12 +59,12 @@ public class Client {
         this.dateNaissance = dateNaissance;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setAge() {
+        this.age = Period.between(this.dateNaissance, LocalDate.now()).getYears();
     }
 
 }
