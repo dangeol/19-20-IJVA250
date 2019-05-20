@@ -46,5 +46,16 @@ public class ExportController {
                     + "\";"+client.getDateNaissance().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
         }
     }
-    
+
+    @GetMapping("/clients/xlsx")
+    public void clientsXLSX(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //FileOutputStream outputFilestream = new FileOutputStream(outputPath);
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Clients");
+        Row headerRow = sheet.createRow(0);
+        Cell cellPrenom = headerRow.createCell(0);
+        cellPrenom.setCellValue("Prénom");
+        //workbook.write(fileOutputStream);
+        workbook.close();
+    }
 }

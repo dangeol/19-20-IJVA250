@@ -23,6 +23,9 @@ public class Client {
     @Column
     private LocalDate dateNaissance;
 
+    @Column
+    private Integer age;
+
     public Long getId() {
         return id;
     }
@@ -53,6 +56,14 @@ public class Client {
 
     public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
 }
