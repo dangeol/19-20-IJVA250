@@ -61,8 +61,21 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
         f2.setClient(client2);
         em.persist(f2);
         em.persist(newLigneFacture(f2, a1, 10));
+
+        Facture f3 = new Facture();
+        f3.setClient(client1);
+        em.persist(f3);
+        em.persist(newLigneFacture(f3, a1, 2));
     }
 
+    /**
+     * Méthode qui ajoute une nouvelle ligne dans une facture; cette ligne contient
+     * l'article et sa quantité
+     * @param f
+     * @param a1
+     * @param quantite
+     * @return
+     */
     private LigneFacture newLigneFacture(Facture f, Article a1, int quantite) {
         LigneFacture lf1 = new LigneFacture();
         lf1.setArticle(a1);
@@ -71,6 +84,13 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
         return lf1;
     }
 
+    /**
+     * Méthode qui ajoute un nouveau client
+     * @param nom
+     * @param prenom
+     * @param dateNaissance
+     * @return
+     */
     private Client newClient(String nom, String prenom, LocalDate dateNaissance) {
         Client client = new Client();
         client.setNom(nom);

@@ -42,6 +42,10 @@ public class LigneFacture {
 
     public void setQuantite(int quantite) { this.quantite = quantite; }
 
+    /**
+     * Méthode qui calcule le sous-total d'une ligne d'une facture
+     * @return le prix sous-total
+     */
     public Double getSousTotal() {
 
         return this.quantite * this.article.getPrix();

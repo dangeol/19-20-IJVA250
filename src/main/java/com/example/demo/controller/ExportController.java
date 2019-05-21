@@ -35,6 +35,12 @@ public class ExportController {
     @Autowired
     private FactureService factureService;
 
+    /**
+     * Méthode qui écrit les données des clients dans un fichier *.csv
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("/clients/csv")
     public void clientsCSV(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/csv");
@@ -51,6 +57,12 @@ public class ExportController {
         }
     }
 
+    /**
+     * Méthode qui écrit les données des clients dans un fichier *.xlsx
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("/clients/xlsx")
     public void clientsXLSX(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/vnd.ms-excel");
@@ -77,6 +89,13 @@ public class ExportController {
         workbook.close();
     }
 
+    /**
+     * Méthode qui écrit pour chaque client l'Id des factures et ses montants totaux en Euros dans un fichier *.xlsx
+     * @param request
+     * @param response
+     * @param id
+     * @throws IOException
+     */
     @GetMapping("/clients/{id}/factures/xlsx")
     public void facturesParClientXLSX(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id) throws IOException {
         response.setContentType("application/vnd.ms-excel");

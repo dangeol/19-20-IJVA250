@@ -35,6 +35,10 @@ public class Facture {
         this.client = client;
     }
 
+    /**
+     * Méthode qui calcule la somme de tous les sous-totaux d'une facture
+     * @return la somme totale
+     */
     public Double getTotal() {
         Double somme = 0.0;
         for(LigneFacture ligneFactures : ligneFactures) {
