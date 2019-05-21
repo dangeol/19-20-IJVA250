@@ -35,6 +35,14 @@ public class Facture {
         this.client = client;
     }
 
+    public Set<LigneFacture> getLigneFactures() {
+        return ligneFactures;
+    }
+
+    public void setLigneFactures(Set<LigneFacture> ligneFactures) {
+        this.ligneFactures = ligneFactures;
+    }
+
     /**
      * Méthode qui calcule la somme de tous les sous-totaux d'une facture
      * @return la somme totale
