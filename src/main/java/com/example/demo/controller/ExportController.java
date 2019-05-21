@@ -121,7 +121,8 @@ public class ExportController {
     }
 
     /**
-     * Méthode qui écrit toutes les factures dans un fichier *.xlsx et groupe les onglets par client
+     * Méthode qui écrit tous les clients dans un fichier *.xlsx et appelle pour chaque client
+     * la methode creerOngletsFacturesXLSX();
      * @param request
      * @param response
      * @throws IOException
@@ -170,14 +171,10 @@ public class ExportController {
         for (Facture facture : facturesDuClient) {
             Sheet sheet = workbook.createSheet("Facture " + facture.getId());
             Row headerRow = sheet.createRow(0);
-            Cell cellNom = headerRow.createCell(0);
-            cellNom.setCellValue("Nom article ");
-            Cell cellQuant = headerRow.createCell(1);
-            cellQuant.setCellValue("quantité");
-            Cell cellPrix = headerRow.createCell(2);
-            cellPrix.setCellValue("prix unitaire");
-            Cell cellSoustotal = headerRow.createCell(3);
-            cellSoustotal.setCellValue("prix de la ligne");
+            headerRow.createCell(0).setCellValue("Nom article ");
+            headerRow.createCell(1).setCellValue("quantité");
+            headerRow.createCell(2).setCellValue("prix unitaire");
+            headerRow.createCell(3).setCellValue("prix de la ligne");
             Set<LigneFacture> ligneFactures = facture.getLigneFactures();
             int rowId = 1;
             for (LigneFacture ligneFacture : ligneFactures) {
