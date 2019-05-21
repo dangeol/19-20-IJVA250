@@ -16,7 +16,6 @@ public class Facture {
     @OneToMany(mappedBy = "facture")
     private Set<LigneFacture> ligneFactures;
 
-
     public Long getId() {
         return id;
     }
