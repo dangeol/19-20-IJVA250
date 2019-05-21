@@ -128,10 +128,9 @@ public class ExportController {
      * @throws IOException
      */
     @GetMapping("/factures/xlsx")
-    public void toutesLesFacturesGroupesXLSX(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void toutesLesClientsEtFacturesGroupesXLSX(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition","attachment; filename=\"toutesLesFactures.xlsx\"");
-        //List<Facture> toutesLesFactures = factureService.findAllFactures();
         List<Client> tousLesClients = clientService.findAllClients();
         Workbook workbook = new XSSFWorkbook();
         for (Client client : tousLesClients) {
@@ -147,33 +146,43 @@ public class ExportController {
             Row rowDateNaissance = sheetClient.createRow(2);
             rowDateNaissance.createCell(0).setCellValue("Date naissance");
             rowDateNaissance.createCell(1).setCellValue(client.getDateNaissance().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
-            for (Facture facture : facturesDuClient) {
-                Sheet sheet = workbook.createSheet("Facture " + facture.getId());
-                Row headerRow = sheet.createRow(0);
-                Cell cellNom = headerRow.createCell(0);
-                cellNom.setCellValue("Nom article ");
-                Cell cellQuant = headerRow.createCell(1);
-                cellQuant.setCellValue("quantité");
-                Cell cellPrix = headerRow.createCell(2);
-                cellPrix.setCellValue("prix unitaire");
-                Cell cellSoustotal = headerRow.createCell(3);
-                cellSoustotal.setCellValue("prix de la ligne");
-                Set<LigneFacture> ligneFactures = facture.getLigneFactures();
-                int ligne = 1;
-                for (LigneFacture ligneFacture : ligneFactures) {
-                    Row row = sheet.createRow(ligne);
-                    row.createCell(0).setCellValue(ligneFacture.getArticle().getLibelle());
-                    row.createCell(1).setCellValue(ligneFacture.getQuantite());
-                    row.createCell(2).setCellValue(ligneFacture.getArticle().getPrix());
-                    row.createCell(3).setCellValue(ligneFacture.getSousTotal());
-                    ligne++;
-                }
-                Row row = sheet.createRow(ligne);
-                row.createCell(2).setCellValue("TOTAL");
-                row.createCell(3).setCellValue(facture.getTotal());
-            }
+
+            creerOngletsFacturesXLSX(workbook, facturesDuClient);
         }
         workbook.write(response.getOutputStream());
         workbook.close();
+    }
+
+    /**
+     * Méthode qui créé dans le fichier *.xlsx après l'onglet d'un client les onglets des factures du client
+     * @param workbook
+     * @param facturesDuClient
+     */
+    public void creerOngletsFacturesXLSX(Workbook workbook, List<Facture> facturesDuClient) {
+        for (Facture facture : facturesDuClient) {
+            Sheet sheet = workbook.createSheet("Facture " + facture.getId());
+            Row headerRow = sheet.createRow(0);
+            Cell cellNom = headerRow.createCell(0);
+            cellNom.setCellValue("Nom article ");
+            Cell cellQuant = headerRow.createCell(1);
+            cellQuant.setCellValue("quantité");
+            Cell cellPrix = headerRow.createCell(2);
+            cellPrix.setCellValue("prix unitaire");
+            Cell cellSoustotal = headerRow.createCell(3);
+            cellSoustotal.setCellValue("prix de la ligne");
+            Set<LigneFacture> ligneFactures = facture.getLigneFactures();
+            int ligne = 1;
+            for (LigneFacture ligneFacture : ligneFactures) {
+                Row row = sheet.createRow(ligne);
+                row.createCell(0).setCellValue(ligneFacture.getArticle().getLibelle());
+                row.createCell(1).setCellValue(ligneFacture.getQuantite());
+                row.createCell(2).setCellValue(ligneFacture.getArticle().getPrix());
+                row.createCell(3).setCellValue(ligneFacture.getSousTotal());
+                ligne++;
+            }
+            Row row = sheet.createRow(ligne);
+            row.createCell(2).setCellValue("TOTAL");
+            row.createCell(3).setCellValue(facture.getTotal());
+        }
     }
 }
