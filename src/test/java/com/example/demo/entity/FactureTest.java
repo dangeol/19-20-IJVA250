@@ -22,7 +22,7 @@ public class FactureTest {
         //Then
         Assertions.assertThat(total).isEqualTo(0.0);
     }
-    
+
     @ParameterizedTest
     @CsvSource({
             "0, 499.99, 0.0",
