@@ -54,7 +54,7 @@ public class ExportService {
         }
     }
 
-    public void clientsXLSX(OutputStream outputStream) throws IOException {
+    public void clientsXLSX(HttpServletResponse response) throws IOException {
 
         List<Client> allClients = clientService.findAllClients();
 
@@ -86,11 +86,11 @@ public class ExportService {
 
             iRow = iRow + 1;
         }
-        //workbook.write(outputStream.getOutputStream());
+        workbook.write(response.getOutputStream());
         workbook.close();
     }
 
-    public void factureXLSXByClient(@PathVariable("id") Long clientId, OutputStream outputStream) throws IOException {
+    public void factureXLSXByClient(Long clientId, HttpServletResponse response) throws IOException {
 
         List<Facture> factures = factureService.findFacturesClient(clientId);
 
@@ -116,7 +116,7 @@ public class ExportService {
 
             iRow = iRow + 1;
         }
-        //workbook.write(outputStream.getOutputStream());
+        workbook.write(response.getOutputStream());
         workbook.close();
     }
 }
