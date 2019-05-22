@@ -1,12 +1,10 @@
 package com.example.demo.entity;
 
-import com.example.demo.entity.Article;
-import com.example.demo.entity.Facture;
-import com.example.demo.entity.LigneFacture;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
 
@@ -24,16 +22,22 @@ public class FactureTest {
         //Then
         Assertions.assertThat(total).isEqualTo(0.0);
     }
-
-    @Test
-    public void getTotal_factureAvecUnArticleRetournePrixUnitaireDeLArticle() {
+    
+    @ParameterizedTest
+    @CsvSource({
+            "0, 499.99, 0.0",
+            "1, 499.99, 499.99",
+            "2, 499.99, 999.98",
+            "2, 0.0, 0.0"
+    })
+    public void getTotal_factureAvecXFoisLeMemeArticleRetournePrixUnitaireDeLArticleFoisX(int quantite, double prix, double calculTotal) {
         //Given
         Article article = new Article();
-        article.setPrix(499.99);
+        article.setPrix(prix);
 
         LigneFacture ligneFacture = new LigneFacture();
         ligneFacture.setArticle(article);
-        ligneFacture.setQuantite(1);
+        ligneFacture.setQuantite(quantite);
 
         Facture facture = new Facture();
         HashSet<LigneFacture> ligneFactures = new HashSet<>();
@@ -45,29 +49,6 @@ public class FactureTest {
         Double total = facture.getTotal();
 
         //Then
-        Assertions.assertThat(total).isEqualTo(499.99);
-    }
-
-    @Test
-    public void getTotal_factureAvecDeuxFoisLeMemeArticleRetournePrixUnitaireDeLArticleFoisDeux() {
-        //Given
-        Article article = new Article();
-        article.setPrix(499.99);
-
-        LigneFacture ligneFacture = new LigneFacture();
-        ligneFacture.setArticle(article);
-        ligneFacture.setQuantite(2);
-
-        Facture facture = new Facture();
-        HashSet<LigneFacture> ligneFactures = new HashSet<>();
-
-        ligneFactures.add(ligneFacture);
-        facture.setLigneFactures(ligneFactures);
-
-        //When
-        Double total = facture.getTotal();
-
-        //Then
-        Assertions.assertThat(total).isEqualTo(999.98);
+        Assertions.assertThat(total).isEqualTo(calculTotal);
     }
 }
