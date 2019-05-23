@@ -1,8 +1,6 @@
-package com.example.demo.controller;
+package com.example.demo.service;
 
 import com.example.demo.entity.Client;
-import com.example.demo.service.ClientService;
-import com.example.demo.service.ExportService;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -23,7 +21,7 @@ import java.util.Collections;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExportControllerTest {
+public class ExportServiceTest {
 
     @Mock
     private ClientService mockClientService;
