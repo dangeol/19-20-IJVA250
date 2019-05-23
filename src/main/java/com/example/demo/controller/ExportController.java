@@ -3,7 +3,15 @@ package com.example.demo.controller;
 import com.example.demo.entity.Client;
 import com.example.demo.entity.Facture;
 import com.example.demo.entity.LigneFacture;
-import com.example.demo.service.*;
+import com.example.demo.service.ClientService;
+import com.example.demo.service.FactureService;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -17,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -196,5 +205,43 @@ public class ExportController {
             row.getCell(3).setCellStyle(styleGrasRougeEntoure);
             sheet.addMergedRegion(new CellRangeAddress(rowId,rowId,0,2));
         }
+    }
+
+    /** Méthode qui écrit les données des clients dans un fichier *.pdf
+     * @param response
+     * @throws IOException
+     */
+    @GetMapping("/factures/{id}/pdf")
+    public void facturePdf(@PathVariable("id") Long idFacture,
+                           HttpServletResponse response, @PathVariable Long id) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition","attachment; filename=\"facture" + idFacture + ".pdf\"");
+        Facture facture = factureService.findAllFacturesById(id);
+        Document document = new Document();
+        OutputStream outputStream = response.getOutputStream();
+        PdfWriter.getInstance(document, outputStream);
+        document.open();
+
+        document.add(new Paragraph("Facture de Mme/M." + facture.getClient().getNom()));
+        PdfPTable table = new PdfPTable(3);
+
+        table.addCell("Libelle");
+        table.addCell("q");
+        table.addCell("p");
+
+        Set<LigneFacture> ligneFactures = facture.getLigneFactures();
+        for (LigneFacture ligneFacture : ligneFactures) {
+            table.addCell(ligneFacture.getArticle().getLibelle());
+            table.addCell(ligneFacture.getQuantite().toString());
+            table.addCell(ligneFacture.getArticle().getPrix().toString());
+        }
+        PdfPCell total = new PdfPCell(new Phrase("TOTAL"));
+        total.setColspan(2);
+        table.addCell(total);
+
+        table.addCell(("" + facture.getTotal().toString()));
+
+        document.add(table);
+        document.close();
     }
 }

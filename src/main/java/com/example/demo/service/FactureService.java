@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Client;
 import com.example.demo.entity.Facture;
-import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.FactureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +21,9 @@ public class FactureService {
 
     public List<Facture> findAllFacturesByClientId(Long id) {
         return factureRepository.findAllFacturesByClientId(id);
+    }
+
+    public Facture findAllFacturesById(Long id) {
+        return factureRepository.findAllFacturesById(id);
     }
 }
