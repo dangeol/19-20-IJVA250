@@ -5,6 +5,7 @@ import com.example.demo.entity.Facture;
 import com.example.demo.service.ClientService;
 import com.example.demo.service.ExportService;
 import com.example.demo.service.FactureService;
+import com.itextpdf.text.DocumentException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -113,5 +114,17 @@ public class ExportController {
         }
         workbook.write(response.getOutputStream());
         workbook.close();
+    }
+
+    @GetMapping("/factures/{id}/pdf")
+    public void facturePdf(
+            @PathVariable("id") Long idFacture,
+            HttpServletResponse response
+    ) throws IOException, DocumentException {
+        response.setContentType("application/pdf");
+        response.setHeader(
+                "Content-Disposition",
+                "attachment; filename=\"facture" + idFacture + ".pdf\"");
+        exportService.exportPDF(idFacture, response.getOutputStream());
     }
 }

@@ -21,7 +21,7 @@ public class ExportServiceSansMockitoTest {
     @Test
     public void clientsCSV_avecUnClient() throws IOException {
         ClientServiceBidonImpl clientServiceBidon = new ClientServiceBidonImpl();
-        ExportService exportService = new ExportService(clientServiceBidon);
+        ExportService exportService = new ExportService(clientServiceBidon, null);
 
         StringWriter stringWriter = new StringWriter();
         exportService.clientsCSV(stringWriter);

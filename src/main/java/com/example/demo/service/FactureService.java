@@ -24,4 +24,8 @@ public class FactureService {
     public List<Facture> findFacturesClient(Long clientId) {
         return factureRepository.findByClientId(clientId);
     }
+
+    public Facture findById(Long idFacture) {
+        return factureRepository.findById(idFacture).get();
+    }
 }
