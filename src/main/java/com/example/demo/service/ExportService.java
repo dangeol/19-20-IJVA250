@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.time.LocalDate;
@@ -46,7 +46,7 @@ public class ExportService {
         }
     }
 
-    public void clientsXLSX(HttpServletResponse response) throws IOException {
+    public void clientsXLSX(OutputStream outputStream) throws IOException {
 
         List<Client> allClients = clientService.findAllClients();
 
@@ -78,11 +78,11 @@ public class ExportService {
 
             iRow = iRow + 1;
         }
-        workbook.write(response.getOutputStream());
+        workbook.write(outputStream);
         workbook.close();
     }
 
-    public void factureXLSXByClient(Long clientId, HttpServletResponse response) throws IOException {
+    public void factureXLSXByClient(Long clientId, OutputStream outputStream) throws IOException {
 
         List<Facture> factures = factureService.findFacturesClient(clientId);
 
@@ -108,7 +108,7 @@ public class ExportService {
 
             iRow = iRow + 1;
         }
-        workbook.write(response.getOutputStream());
+        workbook.write(outputStream);
         workbook.close();
     }
 }

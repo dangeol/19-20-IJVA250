@@ -64,7 +64,7 @@ public class ExportServiceTest {
 
         //When //Then
         MockHttpServletResponse response = new MockHttpServletResponse();
-        exportService.clientsXLSX(response);
+        exportService.clientsXLSX(response.getOutputStream());
 
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Clients");

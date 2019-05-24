@@ -32,13 +32,13 @@ public class ExportController {
     public void clientsXLSX(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=\"clients.xlsx\"");
-        exportService.clientsXLSX(response);
+        exportService.clientsXLSX(response.getOutputStream());
     }
 
     @GetMapping("/clients/{id}/factures/xlsx")
     public void factureXLSXByClient(@PathVariable("id") Long clientId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=\"factures-client-" + clientId + ".xlsx\"");
-        exportService.factureXLSXByClient(clientId, response);
+        exportService.factureXLSXByClient(clientId, response.getOutputStream());
     }
 }
